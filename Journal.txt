@@ -1,0 +1,1 @@
+9/1 Today, we learned about ER diagrams and discussed the definitions and differences of entities and attributes. Then, we made an ER diagram for the pokestop. Finally, we ended class with making an ER diagram for the movie database.
