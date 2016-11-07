@@ -1,1 +1,1 @@
-11/3 Today, we installed mySQL workbench and used it to make an ER diagram. However, before we used the program, we first drew ER diagrams on the board modeling the Stuco Store. Today's homework then is to explain the functions in the code of our ER diagram. 
+11/7 Today, we programmed in SQL for the first time. We created a table for a Time Magazine Cover and then we inserted values. Then, we used a function called Delete to delete values. 
