@@ -1,0 +1,32 @@
+CREATE TABLE `Time_Magazine`(
+   `idTimeMagazineCovers` INT NOT NULL,
+   `Date & Year` DATE NOT NULL,
+   `Number` INT NOT NULL,
+   `Volume` INT NOT NULL,
+   `Editor` VARCHAR(45) NOT NULL,
+   `Cover Picture` VARCHAR(45) NOT NULL,
+   `Title in the Cover` VARCHAR(45) NOT NULL,
+   `Article` VARCHAR(100) NOT NULL,
+   `URL` LONGTEXT NOT NULL,
+   PRIMARY KEY (`idTimeMagazineCovers`))
+   ENGINE = InnoDB
+;
+  INSERT INTO Time_Magazine
+  (`idTimeMagazineCovers`, `Date & Year`, `Number`, `Volume`, `Editor`, `Cover Picture`, 
+   `Title in the Cover`, `Article`, `URL`)
+  VALUES
+ (1, '2015-12-21', 25, 186, 'Nancy Gibbs', 'Angela Merkel', 'Person of the Year',
+  'Chancellor of the Free World', 'http://time.com/magazine/us/4144124/december-21st-2015-vol-186-no-25-u-s/'),
+ (2, '1999-04-26', 16, 153, 'Unknown', 'Luke the Skywalker', 
+  'Star Wars', 'George Lucas talks to Bill Moyers about the Spiritual Side of the Force', 
+  'http://content.time.com/time/covers/0,16641,19990426,100.html'),
+ (3, '2016-05-02', 16, 187, 'John Kerry', 'Leonardo DiCaprio', 
+  'The 100 Most Influential People', 'Adele', 
+  'http://time.com/magazine/us/4302990/may-2nd-2016-vol-187-no-16-u-s/'),
+ (4, '2014-11-24', 20, 184, 'Jack Dickey', 'Taylor Swift', 
+  'The Power of Taylor Swift', 'The Power of Taylor Swift',
+  'http://time.com/magazine/us/3583115/november-24th-2014-vol-184-no-20-u-s/')
+ ;
+ 
+ DELETE FROM Time_Magazine
+ WHERE idTimeMagazineCovers = 2;
