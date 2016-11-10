@@ -1,1 +1,1 @@
-11/7 Today, we programmed in SQL for the first time. We created a table for a Time Magazine Cover and then we inserted values. Then, we used a function called Delete to delete values. 
+11/10 Today, we FINALLY installed and connected the SQL workbench to the datagrip and then we learned about the use of various functions such as "LIKE" or "USE." Then, we had a practice exercise to complete as homework. The exercise was VERY VERY VERY VERY HARD. 
