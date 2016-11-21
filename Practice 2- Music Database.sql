@@ -9,22 +9,22 @@ CREATE TABLE IF NOT EXISTS artist (
 );
 
 CREATE TABLE IF NOT EXISTS album (
-  artist_artist_id INT NOT NULL,
+  artist_id INT NOT NULL,
   album_id         INT NOT NULL,
   album_name       VARCHAR(45) DEFAULT NULL,
-  PRIMARY KEY (album_id, artist_artist_id),
-  FOREIGN KEY (artist_artist_id) REFERENCES artist (artist_id)
+  PRIMARY KEY (album_id, artist_id),
+  FOREIGN KEY (artist_id) REFERENCES artist (artist_id)
 );
 
 CREATE TABLE IF NOT EXISTS track (
   track_id         INT NOT NULL,
   track_name       VARCHAR(100) DEFAULT NULL,
-  artist_artist_id INT NOT NULL,
-  album_album_id   INT NOT NULL,
+  artist_id INT NOT NULL,
+  album_id   INT NOT NULL,
   time             DECIMAL      DEFAULT NULL,
-  FOREIGN KEY (artist_artist_id) REFERENCES artist (artist_id),
-  FOREIGN KEY (album_album_id) REFERENCES album (album_id),
-  PRIMARY KEY (track_id, artist_artist_id, album_album_id)
+  FOREIGN KEY (artist_id) REFERENCES artist (artist_id),
+  FOREIGN KEY (album_id) REFERENCES album (album_id),
+  PRIMARY KEY (track_id, artist_id, album_id)
 );
 
 CREATE TABLE IF NOT EXISTS Played (
@@ -44,7 +44,7 @@ INSERT INTO artist VALUES (4, "The Rolling Stones");
 INSERT INTO artist VALUES (5, "The Stone Roses");
 INSERT INTO artist VALUES (6, "Kylie Minogue");
 
-INSERT INTO album (artist_artist_id, album_id, album_name) VALUES (2, 1, "Let Love In");
+INSERT INTO album (artist_id, album_id, album_name) VALUES (2, 1, "Let Love In");
 INSERT INTO album VALUES (1, 1, "Retro - John McCready FAN");
 INSERT INTO album VALUES (1, 2, "Substance (Disc 2)");
 INSERT INTO album VALUES (1, 3, "Retro - Miranda Sawyer POP");
@@ -58,7 +58,7 @@ INSERT INTO album VALUES (5, 1, "Second Coming");
 INSERT INTO album VALUES (6, 1, "Light Years");
 INSERT INTO album VALUES (1, 7, "Brotherhood");
 
-INSERT INTO track (track_id, track_name, artist_artist_id, album_album_id, time)
+INSERT INTO track (track_id, track_name, artist_id, album_id, time)
 VALUES (0, 'Do You Love Me?', 2, 1, '5.95');
 INSERT INTO track VALUES (1, 'Nobody\'s Baby Now', 2, 1, '3.87');
 INSERT INTO track VALUES (2, 'Loverman', 2, 1, '6.37');
@@ -249,8 +249,67 @@ SELECT * FROM album WHERE album_name NOT LIKE "L%";
 SELECT * FROM album WHERE album_name LIKE "S%" AND album_name NOT LIKE "%)";
 SELECT * FROM artist WHERE artist_name LIKE "%es" XOR artist_name LIKE "The%";
 SELECT album_id FROM album WHERE album_name = "Brotherhood";
-SELECT * FROM track WHERE album_album_id = 7;
+SELECT * FROM track WHERE album_id = 7;
 
 SELECT track_name, time FROM track WHERE time < 5 LIMIT 3;
-CREATE TEMPORARY TABLE temp_selected SELECT track_name, artist_artist_id FROM track ORDER BY time DESC LIMIT 5;
+CREATE TEMPORARY TABLE IF NOT EXISTS temp_selected SELECT track_name, artist_artist_id FROM track ORDER BY time DESC LIMIT 5;
 SELECT track_name, artist_artist_id FROM temp_selected ORDER BY track_name DESC;
+
+SELECT artist_name, album_name FROM artist INNER JOIN album USING (artist_id);
+SELECT album_name, track_name FROM album INNER JOIN track USING (artist_id, album_id);
+SELECT played, track_name FROM track INNER JOIN played USING (artist_id, album_id, track_id)
+  ORDER BY track.artist_id, track.album_id, track.track_id, played;
+SELECT SUM(time) FROM album INNER JOIN track USING (artist_id, album_id)
+  WHERE album.artist_id = 1 AND album.album_id = 7;
+SELECT artist_id FROM artist WHERE artist_name = "The Rolling Stones";
+SELECT album_id FROM album WHERE artist_id = 4;
+SELECT SUM(time) FROM album INNER JOIN track USING (artist_id, album_id)
+  WHERE album.artist_id = 4 AND album.album_id = 1;
+/** DELETE FROM played WHERE played < "2006-08-15";
+SELECT artist_id FROM artist WHERE artist_name = "Miles Davis";
+SELECT artist_name FROM artist;
+SET @OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS = 0;
+DELETE FROM artist WHERE artist_id = 3;
+DELETE FROM track  WHERE artist_id = 3;
+DELETE FROM played WHERE artist_id = 3;
+SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;
+SELECT artist_name FROM artist;
+SET @OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS = 0;
+DELETE FROM artist, album, track USING artist, album, track WHERE
+  artist_name = "The Rolling Stones" AND artist.artist_id = album.artist_id AND
+  artist.artist_id = track.artist_id AND
+  album.album_id = track.album_id;
+SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;
+SELECT artist_name FROM artist; **/
+SELECT * FROM album WHERE album_name LIKE "Substance%";
+UPDATE album SET album_name ="Substance 1987 (Disc 2)" WHERE artist_id = 1 AND album_id = 2;
+
+INSERT INTO artist (artist_id, artist_name) VALUES (7, "Leftfield");
+INSERT INTO album (artist_id, album_id, album_name) VALUES (7, 0, "Leftism");
+INSERT INTO track (track_id, track_name, artist_id, album_id, time) VALUES (0,"Release the Pressure", 7, 0, '7.39');
+INSERT INTO track VALUES (1, "Afro-Melt", 7, 0, '7.33');
+INSERT INTO track VALUES (2, "Melt", 7, 0, '5.21');
+INSERT INTO track VALUES (3, "Song of Life", 7, 0, '6.55');
+INSERT INTO track VALUES (4, "Original", 7, 0, '6.00');
+INSERT INTO track VALUES (5, "Black Flute", 7, 0, '3.46');
+INSERT INTO track VALUES (6, "Space Shanty", 7, 0, '7.15');
+INSERT INTO track VALUES (7, "Inspection Check One", 7, 0, '6.30');
+INSERT INTO track VALUES (8, "Stom 3000", 7, 0, '5.44');
+INSERT INTO track VALUES (9, "Bonus Track", 7, 0, '1.22');
+
+SELECT artist_id FROM artist WHERE artist_name = "Leftfield";
+SELECT album_id FROM album WHERE artist_id = 7;
+SELECT SUM(TIME) FROM album INNER JOIN track USING (artist_id, album_id)
+  WHERE album.artist_id = 7 AND album.album_id = 0;
+
+SELECT artist_id FROM artist WHERE artist_name = "The Rolling Stones";
+SELECT album_id FROM album WHERE artist_id = 4;
+SELECT SUM(time) FROM album INNER JOIN track USING (artist_id, album_id)
+  WHERE album.artist_id = 4 AND album.album_id = 1;
+
+UPDATE track SET time = '6.22' WHERE artist_id = 7 AND album_id = 0 AND track_id = 4;
+
+DELETE FROM track WHERE artist_id = 7 AND album_id = 0 AND track_id = 9;
+
+SELECT MAX(time) FROM track;
+SELECT artist_name, track_name FROM track INNER JOIN artist USING (artist_id) WHERE time = 17;
