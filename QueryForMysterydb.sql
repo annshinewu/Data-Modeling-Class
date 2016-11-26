@@ -50,5 +50,4 @@ SELECT first_name FROM employees WHERE CHARACTER_LENGTH(first_name) = 14;
 SELECT last_name FROM employees WHERE CHARACTER_LENGTH(last_name) = 16;
 /* 11  */
 SELECT first_name, last_name, hire_date FROM employees WHERE hire_date < 20060000;
-
-SELECT emp_no, count(DISTINCT dept_no) FROM dept_emp GROUP BY emp_no;
+SELECT emp_no, COUNT(*) c FROM dept_emp GROUP BY emp_no HAVING c = 3;
