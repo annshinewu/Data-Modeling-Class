@@ -50,4 +50,43 @@ SELECT first_name FROM employees WHERE CHARACTER_LENGTH(first_name) = 14;
 SELECT last_name FROM employees WHERE CHARACTER_LENGTH(last_name) = 16;
 /* 11  */
 SELECT first_name, last_name, hire_date FROM employees WHERE hire_date < 20060000;
-SELECT emp_no, COUNT(*) c FROM dept_emp GROUP BY emp_no HAVING c = 3;
+
+SELECT emp_no, count(DISTINCT dept_no) FROM dept_emp GROUP BY emp_no;
+
+SELECT emp_no, COUNT(*) FROM salaries
+  INNER JOIN employees USING (emp_no)
+  INNER JOIN dept_emp USING (emp_no)
+  INNER JOIN departments USING (dept_no)
+    WHERE departments.dept_name = 'Development'
+    AND first_name = "Moon"
+    AND birth_date LIKE '1952-12%'
+  GROUP BY emp_no HAVING COUNT(*) = 6;
+
+SELECT first_name, last_name, emp_no, COUNT(*) FROM salaries
+  INNER JOIN employees USING (emp_no)
+  WHERE FLOOR(emp_no/1000) = 14
+  AND employees.first_name LIKE 'G%'
+  GROUP BY emp_no HAVING COUNT(*) = 1;
+
+SELECT emp_no, first_name, last_name FROM employees
+  INNER JOIN dept_emp USING (emp_no)
+  INNER JOIN departments USING (dept_no)
+  INNER JOIN salaries USING (emp_no)
+    WHERE dept_name LIKE 'Research'
+    AND first_name LIKE 'Ba%'
+    AND dept_emp.to_date LIKE '2000%'
+  GROUP BY emp_no HAVING COUNT(*) = 10;
+
+SELECT * FROM employees;
+
+/* first name - kk; last name - tt; emp num includes two 7s */
+SELECT emp_no, first_name, last_name FROM employees
+  WHERE first_name LIKE "%kk%"
+  AND last_name LIKE "%tt%"
+  AND emp_no LIKE '%7%7%';
+
+SELECT emp_no, first_name, last_name FROM employees
+  INNER JOIN salaries USING (emp_no)
+  WHERE first_name LIKE "Al%o"
+  AND emp_no LIKE '%1%1%'
+  GROUP BY emp_no HAVING COUNT(*) = 10;
