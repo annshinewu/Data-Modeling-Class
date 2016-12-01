@@ -1,1 +1,1 @@
-11/24 Today, we were given a "mystery" database and then through queries, we had to identify what the data base was storing and find certain information. We combined the functions learned in previous classes and then used it to find the information we are finding such as the number of people that work in a certain department under a specific age. 
+12/1 We played a game to use queries to find employees in our mystery database. We also learned the functions to find moutn and year in a date. 
