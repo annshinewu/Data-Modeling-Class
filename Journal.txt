@@ -1,1 +1,1 @@
-12/1 We played a game to use queries to find employees in our mystery database. We also learned the functions to find moutn and year in a date. 
+12/5 Today we learned UNION and LEFT JOINS. UNION joins columns from different tables together. LEFT JOINS is similar to the function of INNER JOIN except it joins the left table first and then selects the values in the right table that matches the values in the left table. Then we played the "GUESS WHO?" game again. 
