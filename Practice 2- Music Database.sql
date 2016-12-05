@@ -252,8 +252,8 @@ SELECT album_id FROM album WHERE album_name = "Brotherhood";
 SELECT * FROM track WHERE album_id = 7;
 
 SELECT track_name, time FROM track WHERE time < 5 LIMIT 3;
-CREATE TEMPORARY TABLE IF NOT EXISTS temp_selected SELECT track_name, artist_artist_id FROM track ORDER BY time DESC LIMIT 5;
-SELECT track_name, artist_artist_id FROM temp_selected ORDER BY track_name DESC;
+CREATE TEMPORARY TABLE IF NOT EXISTS temp_selected SELECT track_name, artist_id FROM track ORDER BY time DESC LIMIT 5;
+SELECT track_name, artist_id FROM temp_selected ORDER BY track_name DESC;
 
 SELECT artist_name, album_name FROM artist INNER JOIN album USING (artist_id);
 SELECT album_name, track_name FROM album INNER JOIN track USING (artist_id, album_id);
@@ -313,3 +313,36 @@ DELETE FROM track WHERE artist_id = 7 AND album_id = 0 AND track_id = 9;
 
 SELECT MAX(time) FROM track;
 SELECT artist_name, track_name FROM track INNER JOIN artist USING (artist_id) WHERE time = 17;
+
+SELECT DISTINCT artist_name AS Name FROM artist INNER JOIN album USING (artist_id);
+SELECT artist_name AS Name, COUNT(artist_name) AS Albums FROM artist INNER JOIN album USING (artist_id) GROUP BY Name;
+
+SELECT artist_id, artist_name FROM artist
+  INNER JOIN album USING (artist_id)
+  INNER JOIN track USING (artist_id, album_id)
+  INNER JOIN played USING (artist_id, album_id, track_id)
+  GROUP BY artist_id, album_id;
+
+SELECT track_name, played FROM
+  track INNER JOIN played USING (artist_id, album_id, track_id)
+ORDER BY played desc;
+
+SELECT track_name, played FROM track
+  LEFT JOIN played USING (artist_id, album_id, track_id)
+ORDER BY played DESC;
+
+SELECT track_name, played FROM played
+  LEFT JOIN track USING (artist_id, album_id, track_id)
+ORDER BY played DESC;
+
+SELECT artist_name, album_name, COUNT(*) as TimesPlayed FROM artist
+  INNER JOIN album USING(artist_id)
+  INNER JOIN track USING(artist_id, album_id)
+  INNER JOIN played USING(artist_id, album_id, track_id)
+GROUP BY album.artist_id, album.album_id;
+
+SELECT artist_name, album_name, COUNT(played) as TimesPlayed FROM artist
+  INNER JOIN album USING(artist_id)
+  INNER JOIN track USING(artist_id, album_id)
+  LEFT JOIN played USING(artist_id, album_id, track_id)
+GROUP BY album.artist_id, album.album_id;
