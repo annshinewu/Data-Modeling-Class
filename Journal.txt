@@ -1,1 +1,1 @@
-12/5 Today we learned UNION and LEFT JOINS. UNION joins columns from different tables together. LEFT JOIN is similar to the function of INNER JOIN except it joins the left table first and then selects the values in the right table that matches the values in the left table. Then we played the "GUESS WHO?" game again. 
+12/12 Today we worked on our Sakila database project. I spent the entire time drawing the ER diagram which I STILL HAVEN'T FINISHED because it is too complicated. :D YAY 
