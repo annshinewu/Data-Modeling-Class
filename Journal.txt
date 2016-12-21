@@ -1,1 +1,1 @@
-12/19 In the first part of class, we worked on a warmup in which we identified errors in blocks of provided code. Then, we individually worked on our quarter 2 project. I completed my business idea + rough draft of ER diagram :)) 
+12/21 Today we worked on our quarter 2 project again. It was really nice because we worked outside. We should do that more often. I finished the converting the ER diagram into a relational model. Then, I started normalizing the tables. 
