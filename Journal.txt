@@ -1,1 +1,1 @@
-12/21 Today we worked on our quarter 2 project again. It was really nice because we worked outside. We should do that more often. I finished the converting the ER diagram into a relational model. Then, I started normalizing the tables. 
+1/9 Today, I presented my quarter 2 project and also filled in the rest of the relational table inputs. 
