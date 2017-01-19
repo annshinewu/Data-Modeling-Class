@@ -1,1 +1,1 @@
-1/16 Today, in class, we listened to the midterm presentations of Alex, Andrew, Clement, and Sabrina.
+1/19 Today, we uninstalled mySQL and installed postgreSQL. Then we made a new user and created a new database with 4 entities: Actors, TV Series, Networks, and Awards. 
